@@ -1,0 +1,14 @@
+.button{
+    background-color: green;
+    color: white;
+    font-size: 30px;
+    width: 100px;
+    padding: 15px 30px; 
+    
+}
+
+
+.number{
+    padding-left: 20px;
+    font-size: 30px;
+}
