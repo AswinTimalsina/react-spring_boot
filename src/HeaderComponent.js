@@ -8,7 +8,7 @@ import {withRouter} from 'react-router';
 class HeaderComponent extends Component{
     render(){
         const isUserLoggedIn = AuthenticationService.isAuthenticated();
-        console.log('Hello '+isUserLoggedIn);
+        // console.log('Hello '+isUserLoggedIn);
 
         return(
             <header>

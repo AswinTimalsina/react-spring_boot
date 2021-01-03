@@ -1,10 +1,12 @@
 import React, {Component} from 'react';
 import styles from './TodoStyles.module.css';
-import {Route, Switch, Link} from 'react-router-dom';
+import {Route, Switch} from 'react-router-dom';
 import AuthenticationService from '../../AuthenticationService';
 import TodoComponent from '../../TodoComponent';
 import HeaderComponent from '../../HeaderComponent';
 import AuthenticatedUser from '../../AuthenticatedUser';
+import WelcomeComponent from '../WelcomeComponent';
+import TodoUpComponent from './TodoUpComponent';
 
 class TodoApp extends Component{
 render()
@@ -17,7 +19,8 @@ render()
             <Route path='/' exact component={LoginComponent}/>
             <Route path='/login' component={LoginComponent}/>
             <AuthenticatedUser path='/logout' component={LogoutComponent}/>
-            <AuthenticatedUser path="/todos" exact component={TodoComponent}/>
+            <AuthenticatedUser path="/todos/:id" component={TodoUpComponent}/>
+            <AuthenticatedUser path="/todos"  component={TodoComponent}/>
             <AuthenticatedUser path="/welcome/:name" component={WelcomeComponent}/>  
             <Route component={ErrorHandling}/>
             </Switch>
@@ -132,12 +135,12 @@ function ErrorHandling(){
     return(<div>It is a wrong URL!!! Contact the administrator.</div>)
 }
 
-class WelcomeComponent extends Component{
-        render(){
-            return(
-            <div>Welcome {this.props.match.params.name}!!! <Link to="/todos">Todo</Link></div>
-        )}
-}
+// class WelcomeComponent extends Component{
+//         render(){
+//             return(
+            
+//         )}
+// }
 
 
 
