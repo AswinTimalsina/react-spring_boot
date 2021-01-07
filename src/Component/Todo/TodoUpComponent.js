@@ -11,8 +11,21 @@ class TodoUpComponent extends Component{
         targetDate: null
     }
 
-    onSubmit(values){
-        console.log(values)
+    onSubmit=(values)=>{
+        let username = AuthenticationService.getLoggedInUsername();
+        let todo = {
+            id: this.state.id, 
+            description: values.description,
+            targetDate: values.targetDate
+        };
+        if(this.state.id === -1){
+            TodoDataService.addTodo(username, todo).then(()=>this.props.history.push('/todos')).catch(err=>console.log(err));
+        }
+        else{
+        TodoDataService.updateTodo(username, this.state.id, todo).then(()=>this.props.history.push('/todos')).catch(err=>{
+            console.log("Error!!!"+ err);
+        })
+    }
     }
 
     onValidate(values){
@@ -32,6 +45,10 @@ class TodoUpComponent extends Component{
     }
 
     componentDidMount(){
+        if(this.state.id === -1){
+            return
+        }
+        else{
         TodoDataService.retrieveTodo(AuthenticationService.getLoggedInUsername(), this.state.id)
         .then(res=>{
             // console.log(res.data);
@@ -40,6 +57,7 @@ class TodoUpComponent extends Component{
                 targetDate: moment(res.data.targetDate).format('YYYY-MM-DD')
             })
         })
+    }
     }
 
     render(){

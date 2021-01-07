@@ -1,11 +1,17 @@
 import {Component} from 'react';
 import TodoDataService from './api/todo/TodoDataService';
 import AuthenticationService from './AuthenticationService';
+import moment from 'moment';
 
 class TodoComponent extends Component{
     state={
         todo:[], 
         message: null
+    }
+
+    onSubmit=()=>{
+        console.log('Add');
+        this.props.history.push('/todos/-1');
     }
 
     componentDidMount(){
@@ -25,7 +31,7 @@ class TodoComponent extends Component{
     refreshTodo(){
         TodoDataService.retrieveAllTodos(AuthenticationService.getLoggedInUsername())
         .then(res=>{
-            console.log(res.data)
+            // console.log(res.data)
             this.setState({
                 todo: res.data
             })
@@ -62,7 +68,7 @@ class TodoComponent extends Component{
                             <td>{todo.id}</td>
                             <td>{todo.description}</td>
                             <td>{todo.done.toString()}</td>
-                            <td>{todo.targetDate.toString()}</td>
+                            <td>{moment(todo.targetDate).format('MM-DD-YYYY')}</td>
                             <td><button className="btn btn-success" onClick={()=>this.updateTodo(AuthenticationService.getLoggedInUsername(), todo.id)}>Update</button></td>
                             <td><button className="btn btn-warning" onClick={()=>this.deleteTodo(AuthenticationService.getLoggedInUsername(), todo.id)}>Delete</button></td>
                          </tr>
@@ -71,6 +77,9 @@ class TodoComponent extends Component{
                     
                 </tbody>
             </table>
+            <div class='row'>
+            <button className='btn btn-success' onClick={this.onSubmit}>Add</button>
+            </div>
             </div>
         </div>
     )}
