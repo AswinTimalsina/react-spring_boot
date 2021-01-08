@@ -19,7 +19,18 @@ class TodoDataService{
     }
 
     addTodo(name, todo){
-        return axios.post(`http://localhost:8080/users/${name}/todos`, todo);
+        let username = 'user';
+        let password = 'ca0f78d0-a350-45bd-a183-000213921b1c';
+
+        let basicAuthHeader = 'Basic '+window.btoa(username+':'+password);
+        return axios.post(`http://localhost:8080/users/${name}/todos`, todo,
+        {
+            headers:{
+                authorization: basicAuthHeader
+            }
+        }
+        )
+
     }
 }
 

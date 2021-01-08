@@ -44,7 +44,7 @@ class LoginComponent extends Component{
     // }
 
     state={
-        username:'in28minutes',
+        username:'user',
         password:'',
         loginFailed:null
     }
@@ -57,20 +57,32 @@ class LoginComponent extends Component{
     }
 
     loginClicked=()=>{
-        if(this.state.username==='in28minutes' && this.state.password==='dummy'){
-            // this.setState({
-            //     loginFailed: false
-            // })
+        // if(this.state.username==='user' && this.state.password==='c68ab437-1d56-4269-b68e-e5f42273c8ab'){
+        //     // this.setState({
+        //     //     loginFailed: false
+        //     // })
+        //     AuthenticationService.startAuthenticationService(this.state.username, this.state.password);
+        //     this.props.history.push(`/welcome/${this.state.username}`);
+        // }
+        // else{
+        //     this.setState({
+        //         loginFailed: true
+        //     })
+        // }  
+        // console.log(this.state);
+
+        AuthenticationService.authenticationBackend(this.state.username, this.state.password).then(res=>{
             AuthenticationService.startAuthenticationService(this.state.username, this.state.password);
             this.props.history.push(`/welcome/${this.state.username}`);
-        }
-        else{
+
+        }).catch(()=>{
             this.setState({
                 loginFailed: true
+                })
             })
-        }  
-        // console.log(this.state);
-    }
+    }//loginClicked ends
+
+
     render()
     {
         let credentialFailed = this.state.loginFailed;

@@ -36,7 +36,18 @@ class WelcomeComponent extends Component{
                 messagePath: res.data.message
             })
         })
-        .catch(err=>console.log("Error path: "+err.response.data.message));
+        .catch(err=>{
+            if(err.response){
+                this.setState({
+                    messagePath: err.response.data.message
+                })
+            }
+            else{
+                this.setState({
+                    messagePath: 'Error path!!!!'
+                })
+            }
+        });
     }
 
     render(){
